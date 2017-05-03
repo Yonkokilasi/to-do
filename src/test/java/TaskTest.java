@@ -95,6 +95,15 @@ public class TaskTest {
     Task savedTask = Task.all().get(0);
     assertEquals(myTask.getId(), savedTask.getId());
   }
+  @Test
+  public void save_savesCategoryIdIntoDB_true() {
+      Category myCategory = new Category("Household chores");
+      myCategory.save();
+      Task myTask = new Task("Mow the lawn",myCategory.getId());
+      myTask.save();
+      Task savedTask = Task.find(myTask.getId());
+      assertEquals(savedTask.getCategoryId(),myCategory.getId());
+  }
 
 
 }

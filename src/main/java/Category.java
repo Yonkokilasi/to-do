@@ -25,8 +25,12 @@ import org.sql2o.*;
          return id;
        }
 
-    //   public List<Task> getTasks() {
-    //   }
+      public List<Task> getTasks() {
+          try (Connection con = DB.sql2o.open()) {
+              String sql = "SELECT *FROM tasks where categoryId=:id";
+              return con.createQuery(sql).addParameter("id", this.id).executeAndFetch(Task.class);
+          }
+      }
 
        public static Category find(int id) {
        try(Connection con = DB.sql2o.open()) {
@@ -50,5 +54,6 @@ import org.sql2o.*;
                    this.id = (int)  con.createQuery(sql).addParameter("name", this.name).executeUpdate().getKey();
                }
            }
+
 
      }
